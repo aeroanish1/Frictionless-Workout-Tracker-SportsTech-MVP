@@ -1,4 +1,4 @@
-# AuraFit — Build Plan
+# LOFTE — Build Plan
 
 > Voice-first, frictionless workout tracker. Log by speaking, track progressive overload, stand out with AI-powered insights + social layer.
 > UX/design is deferred (Figma/Framer later). This plan focuses on functionality only.
@@ -50,7 +50,7 @@ Move AI logic to backend so:
 
 ## Phase 3 — Core Differentiating Features 🟡
 
-These are what make AuraFit more than just a logger. Build in this order:
+These are what make LOFTE more than just a logger. Build in this order:
 
 ### 3a. PR Detection
 When saving a workout, auto-detect if any set is a personal best (highest weight for that exercise name ever).

@@ -138,7 +138,7 @@ export default function App() {
             <div className="w-10 h-10 bg-black rounded-xl flex items-center justify-center">
               <Dumbbell className="text-white" size={24} />
             </div>
-            <h1 className="text-2xl font-black tracking-tighter">AURAFIT</h1>
+            <h1 className="text-2xl font-black tracking-tighter">LOFTE</h1>
           </div>
           <div className="hidden sm:flex items-center gap-1 bg-zinc-100 p-1 rounded-2xl">
             <TabButton 

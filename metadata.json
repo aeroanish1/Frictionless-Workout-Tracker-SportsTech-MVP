@@ -1,5 +1,5 @@
 {
-  "name": "AuraFit - Frictionless Workout Tracker",
+  "name": "LOFTE - Frictionless Workout Tracker",
   "description": "A frictionless workout tracker that uses AI and voice to log exercises effortlessly.",
   "requestFramePermissions": ["microphone", "camera"]
 }
