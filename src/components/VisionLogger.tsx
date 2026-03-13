@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { Camera, RefreshCw, Check, Loader2, AlertCircle, X, Image as ImageIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { GoogleGenAI, Type } from "@google/genai";
@@ -17,15 +17,21 @@ export const VisionLogger: React.FC<VisionLoggerProps> = ({ onDataExtracted }) =
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  // Callback ref: fires the instant the <video> element mounts in the DOM
+  const videoCallbackRef = useCallback((node: HTMLVideoElement | null) => {
+    videoRef.current = node;
+    if (node && stream) {
+      node.srcObject = stream;
+      node.play().catch(() => {});
+    }
+  }, [stream]);
+
   const startCamera = async () => {
     try {
-      const mediaStream = await navigator.mediaDevices.getUserMedia({ 
-        video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } } 
+      const mediaStream = await navigator.mediaDevices.getUserMedia({
+        video: { width: { ideal: 1280 }, height: { ideal: 720 } }
       });
       setStream(mediaStream);
-      if (videoRef.current) {
-        videoRef.current.srcObject = mediaStream;
-      }
       setStatus('camera');
       setError(null);
     } catch (err) {
@@ -79,7 +85,7 @@ export const VisionLogger: React.FC<VisionLoggerProps> = ({ onDataExtracted }) =
       const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
       
       const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
+        model: "gemini-2.5-flash",
         contents: [
           {
             parts: [
@@ -220,10 +226,11 @@ export const VisionLogger: React.FC<VisionLoggerProps> = ({ onDataExtracted }) =
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               className="relative w-full h-full"
             >
-              <video 
-                ref={videoRef} 
-                autoPlay 
-                playsInline 
+              <video
+                ref={videoCallbackRef}
+                autoPlay
+                playsInline
+                muted
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 border-2 border-white/30 pointer-events-none m-8 rounded-lg">

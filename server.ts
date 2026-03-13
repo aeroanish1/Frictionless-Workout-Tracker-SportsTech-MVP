@@ -21,10 +21,8 @@ db.exec(`
   );
 `);
 
-// Drop and recreate exercises to ensure correct schema for cardio
 db.exec(`
-  DROP TABLE IF EXISTS exercises;
-  CREATE TABLE exercises (
+  CREATE TABLE IF NOT EXISTS exercises (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     workout_id INTEGER NOT NULL,
     name TEXT NOT NULL,
